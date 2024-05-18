@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import logo from "../../assets/logo.svg";
-import "./index.css";
+// import "./index.css";
 export default function Navbar(){
     return(
         <header className="navbar h-20 bg-C0DFED "> 
