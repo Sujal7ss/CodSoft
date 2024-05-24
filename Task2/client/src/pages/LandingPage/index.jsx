@@ -5,7 +5,7 @@ import LoginButton from "../../components/LoginButton";
 
 export default function LandingPage() {
   return (
-    <div>
+    <>
       <Navbar />
       <div className="h-screen bg-C0DFED flex flex-row">
         <div className="relative left-36">
@@ -24,6 +24,6 @@ export default function LandingPage() {
           style="justify-evenly items-center absolute relative right-64 top-12"
         />
       </div>
-    </div>
+    </>
   );
 }

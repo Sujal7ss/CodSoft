@@ -11,3 +11,7 @@
 .h-90vh{
     height: 90vh;
 }
+.list {
+    list-style: circle;
+    
+}
