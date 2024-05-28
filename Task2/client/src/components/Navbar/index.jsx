@@ -1,30 +1,42 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import logo from "../../assets/logo.svg";
-import Logo from "../Logo"
-
+import Logo from "../Logo";
 import LoginButton from "../LoginButton";
+import NavbarDetails from "../../assets/NavbarDetails";
+import Button from "../../components/Button";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+// sconst navbar = NavbarDetails.Homepage.Navbar;
 
-// import "./index.css";
-export default function Navbar() {
+export default function Navbar({ pages }) {
+  const navigate = useNavigate();
+  const navbar = NavbarDetails[pages].Navbar;
+  const button = NavbarDetails[pages].Button;
+
+  function newJobHandler(){
+    
+    return navigate("/postJob")
+  }
   return (
-    <header className="navbar h-20 bg-C0DFED sticky top-0">
+    <header className="navbar h-20 bg-C0DFED  top-0">
       <nav className="container flex flex-row justify-evenly items-center p-7 ">
-        <Logo />
-        <div className="w-96">
+        <Link to="/">
+          <Logo />
+        </Link>
+        <div className="w-fit ">
           <ul
-            className="flex flex-row items-center justify-between  text-xs 
+            className="flex flex-row w-full gap-10 flex-wrap items-center justify-between  text-xs 
                 font-bold
                 cursor-pointer 
                 text-gray-500"
           >
-            <li className=" hover:text-gray-900">HOW WE WORK</li>
-            <li className=" hover:text-gray-900">PRICING</li>
-            <li className=" hover:text-gray-900">DOWNLOAD</li>
-            <li className=" hover:text-gray-900">ABOUT US</li>
+            {navbar.map((item) => (
+              <NavLink key={item} className=" hover:text-gray-900" to="/">
+                {item}
+              </NavLink>
+            ))}
           </ul>
         </div>
-        <LoginButton />
+        {button === "LoginButton" && <LoginButton />}
+        {button.name === "Profile" && <Button onSelect={newJobHandler}>Post a Job</Button>}
       </nav>
     </header>
   );

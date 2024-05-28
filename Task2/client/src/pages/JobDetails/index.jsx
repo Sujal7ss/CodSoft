@@ -1,19 +1,19 @@
 import CompanyHeader from "../../components/CompanyHeader";
-import ApplicantsNavbar from "../../components/ApplicantsNavbar";
+import Navbar from "../../components/Navbar";
 import EssentialDetails from "../../components/EssentialDetails";
 import JobDescription from "../../components/JobDescription";
-import Skills from "../../components/Skills";
+
 
 export default function JobDetails() {
   return (
     <>
-      <ApplicantsNavbar />
-      <div className="company w-11/12 m-auto ">
+      <Navbar pages="Candidate" />
+      <div className="company w-11/12 m-auto mb-10">
         
         <CompanyHeader />
         <EssentialDetails />
 
-        <JobDescription></JobDescription>
+        <JobDescription />
         
       </div>
     </>

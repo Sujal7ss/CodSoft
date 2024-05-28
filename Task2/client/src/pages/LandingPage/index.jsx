@@ -6,7 +6,7 @@ import LoginButton from "../../components/LoginButton";
 export default function LandingPage() {
   return (
     <>
-      <Navbar />
+      <Navbar pages="Homepage"/>
       <div className="h-screen bg-C0DFED flex flex-row">
         <div className="relative left-36">
           <span className="text-7xl relative top-40 font-bold bg-013C5E">

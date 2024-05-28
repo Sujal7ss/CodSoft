@@ -90,7 +90,7 @@ export default function JobDescription() {
       </div>
       <div className="border h-fit w-96 mt-4 bg-slate-50 p-5">
         <h1 className="text-2xl font-semibold my-5">Skills - Mandatory</h1>
-        <Skills />
+        <Skills gap={"gap-8"}/>
       </div>
     </div>
   );
