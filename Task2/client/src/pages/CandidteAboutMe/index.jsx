@@ -221,7 +221,7 @@ function CandidateAboutMe() {
                   />
                 </>
               )}
-              {!edit && <p className="text-gray-700">{description}</p>}
+              {!edit && <p className="text-gray-700 w-full overflow-scroll">{description}</p>}
             </div>
             <div className="px-6 py-4 border-t border-gray-200">
               <h3 className="text-xl font-semibold text-gray-900 mb-2">

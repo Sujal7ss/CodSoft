@@ -103,9 +103,9 @@ function JobDetailForm() {
           }}
           className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
         >
-          <option value="part-time">Part-Time</option>
-          <option value="full-time">Full-Time</option>
-          <option value="internship">Internship</option>
+          <option value="Part-Time">Part-Time</option>
+          <option value="Full-Time">Full-Time</option>
+          <option value="Internship">Internship</option>
         </select>
       </div>
       <div className="relative mt-3">

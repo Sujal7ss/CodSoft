@@ -31,7 +31,7 @@ export default function JobDetails() {
   const [apply, setApply] = useState(false);
   const [email, setEmail] = useState();
   const [resume, setResume] = useState();
-  const [candidate, setCandidate] = useState([])
+  const [candidate, setCandidate] = useState([]);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -39,15 +39,14 @@ export default function JobDetails() {
           `http://localhost:8000/api/candidate/jobDetails/${id}`
         );
         const job = data.job;
-        
-        
+
         setCompanyName(job.companyName);
         setRole(job.title);
         setSalary(job.salary);
         setLocation(job.city);
         setDescription(job.jobDescription);
         setLink(job.jobLink);
-        setCandidate(job.appliedCandidates)
+        setCandidate(job.appliedCandidates);
 
         if (data.job.authorId === getCookie("username")) {
           setUser("true");
@@ -307,9 +306,15 @@ export default function JobDetails() {
             )}
           </div>
         </div>
-        <div className="flex flex-row justify-evenly border h-44 mt-4 bg-slate-50 items-center">
-          <AppliedCandidates candidates={candidate}/>
-        </div>
+        {user && (
+          <>
+          
+          <div className="flex flex-col justify-evenly border h-fit mt-4 bg-slate-50 items-center">
+          <h3 className="font-semibold text-2xl my-20">Applied Candidate</h3>
+            <AppliedCandidates candidates={candidate} />
+          </div>
+          </>
+        )}
       </div>
     </>
   );
