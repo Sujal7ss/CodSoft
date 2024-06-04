@@ -10,7 +10,8 @@ export default function Navbar({ pages }) {
   const navigate = useNavigate();
   const navbar = NavbarDetails[pages].Navbar;
   const button = NavbarDetails[pages].Button;
-
+  const logo = NavbarDetails[pages].Logo;
+  // console.log(navbar[0].path)
   function newJobHandler(){
     
     return navigate("/postJob")
@@ -18,7 +19,7 @@ export default function Navbar({ pages }) {
   return (
     <header className="navbar h-20 bg-C0DFED  top-0">
       <nav className="container flex flex-row justify-evenly items-center p-7 ">
-        <Link to="/">
+        <Link to={logo}>
           <Logo />
         </Link>
         <div className="w-fit ">
@@ -28,9 +29,11 @@ export default function Navbar({ pages }) {
                 cursor-pointer 
                 text-gray-500"
           >
+            
             {navbar.map((item) => (
-              <NavLink key={item} className=" hover:text-gray-900" to="/">
-                {item}
+              
+              <NavLink key={item.id}  className=" hover:text-gray-900"  to={item.path}>
+                {item.name}
               </NavLink>
             ))}
           </ul>

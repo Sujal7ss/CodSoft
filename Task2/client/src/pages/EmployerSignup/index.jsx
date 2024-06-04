@@ -10,7 +10,7 @@ function EmployerSignup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [passwd, setPasswd] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
+  // const [authenticated, setAuthenticated] = useState(false);
 
   const signup = async (e) => {
     e.preventDefault();
@@ -35,18 +35,19 @@ function EmployerSignup() {
       );
 
       if (data.success) {
-        setAuthenticated(true);
-        return toast.success(data.message);
+        // setAuthenticated(true);
+        toast.success(data.message);
+        navigate("/employerLogin")
       }
-      return toast.error(data.message);
+      //  return toast.error(data.message);
     } catch (err) {
       return toast.error(err.message);
     }
   };
 
-  if (authenticated) {
-    navigate("/employerLogin")
-  }
+  // if (authenticated) {
+    
+  // }
 
   return (
     <>
@@ -54,7 +55,7 @@ function EmployerSignup() {
         <div className="p-8 lg:w-1/2 mx-auto">
           <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
             <h1 className="text-center text-sm text-gray-500 font-semibold">
-              REGISTER HERE!!!
+              REGISTER HERE AS EMPLOYER!!!
             </h1>
 
             <form

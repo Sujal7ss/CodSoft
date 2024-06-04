@@ -4,13 +4,15 @@ const EmployerSchema = mongoose.Schema({
     name : String,
     email: String,
     password: String,
-    City : String,
-    State : String,
-    Country : String,
-    CompanyName : String,
-    CompanyAddress : String,
-    CompanyDetails : String,
-
+    city : String,
+    phone: Number,
+    state : String,
+    country : String,
+    companyName : String,
+    about: String,
+    activeJobs : [
+        {type : String,}
+    ]
 })
 
-export const Employer = mongoose.model("Employer", EmployerSchema)
+export const Employers = mongoose.model("Employer", EmployerSchema)

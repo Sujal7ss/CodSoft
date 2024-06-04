@@ -1,15 +1,15 @@
 import bcrypt from "bcryptjs";
-import { Employer } from "../Models/Employer.js";
+import { Employers } from "../Models/Employer.js";
 
 export const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    const result = await Employer.find({ email: email });
+    const result = await Employers.find({ email: email });
 
     if (result.length === 0) {
       const hash = await bcrypt.hash(password, 10);
-      const employer = new Employer({
+      const employer = new Employers({
         name: name,
         email: email,
         password: hash,
@@ -37,18 +37,22 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const result = await Employer.find({ email: email });
-    if (result.length === 0) {
+    const result = await Employers.findOne({ email: email });
+    // console.log(result)
+    if (!result ) {
       return res.status(200).json({
         success: false,
         message: "User not exists",
       });
     } else {
-      const isMatch = await bcrypt.compare(password, result[0].password);
+      // console.log(result.companyName)
+      const isMatch = await bcrypt.compare(password, result.password);
       if (isMatch) {
+        
         return res.status(200).json({
             success: true,
             message: "Login successful",
+            company: result,
         })
       }
       else{

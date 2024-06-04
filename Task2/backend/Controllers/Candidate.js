@@ -1,28 +1,24 @@
 import { Candidates } from "../Models/Candidate.js";
+import { Jobs } from "../Models/Job.js";
+
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+
+
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const results = await Candidates.findOne({ email: email });
-    if (!results) {
-      return res.status(404).json({
+    const results = await Candidates.findOne({ email: email });console.log(results);
+    if (results === null) {
+      return res.status(200).json({
         success: false,
-        message: "Invalid Email.",
+        message: "Invalid Credentials",
       });
     }
 
-    const isMatch = await bcrypt.compare(password, results.password);
+    const isMatch = bcrypt.compare(password, results.password);
 
-    const token = await results.generateAuthToken();
-
-    res.cookie("jwtoken", token, {
-      expires: new Date(Date.now() + 300000000),
-      httpOnly: true,
-    });
-
-    console.log(token);
+    // console.log(token);
     if (isMatch) {
       return res.status(200).json({
         success: true,
@@ -31,7 +27,7 @@ const login = async (req, res) => {
     } else {
       return res.status(200).json({
         success: false,
-        message: "Invalid Password.",
+        message: "Invalid Credentials.",
       });
     }
   } catch (err) {
@@ -70,4 +66,63 @@ const signup = async (req, res) => {
   }
 };
 
-export { login, signup };
+const aboutme = async (req, res) => {
+  // console.log(req.query)
+  const email = req.query.email
+  console.log(email)
+  const candidate = await Candidates.findOne({email})
+  console.log(candidate)
+  res.json(candidate);
+}
+
+const update = async (req, res) => {
+  console.log(req.body)
+  const candidate = await Candidates.findOneAndUpdate({email: req.body.email}, req.body, {new: true})
+  console.log(candidate)
+
+  res.json("update")
+}
+
+const jobList = async (req, res) => {
+  try {
+    const list = await Jobs.find({})
+    console.log(list)
+    res.status(200).json({ 
+      success:true,
+      jobs : list
+    })
+  } catch (err) {
+    console.log(err)
+  }
+  
+}
+const appliedJobs = async (req, res) => {
+  try {
+    const email = req.query.email
+    const candidate = await Candidates.findOne({email})
+    console.log(candidate.appliedJobs)
+    const list = candidate.appliedJobs
+    // console.log(list)
+    res.status(200).json({ 
+      success:true,
+      jobs : list
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const jobDetail = async (req, res) => {
+  const jobId = req.params.id
+
+  const job = await Jobs.findOne({_id : jobId})
+  
+  console.log(job)
+
+  res.status(200).json({
+    success:true,
+    job: job
+  })
+}
+
+export { login, signup, aboutme , update, jobList, jobDetail, appliedJobs};

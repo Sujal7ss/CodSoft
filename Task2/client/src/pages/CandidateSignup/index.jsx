@@ -49,7 +49,7 @@ function CandidateSignup() {
         <div className="p-8 lg:w-1/2 mx-auto">
           <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
             <h1 className="text-center text-sm text-gray-500 font-semibold">
-              REGISTER HERE!!!
+              REGISTER AS A CANDIDATE
             </h1>
 
             <form

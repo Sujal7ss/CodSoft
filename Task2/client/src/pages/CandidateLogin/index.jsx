@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import {  useNavigate  } from "react-router-dom";
-
+import getCookie, {setCookie} from "../../components/cookie";
 export default function CandidateLogin() {
   const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
 
+  
+  
   const loginf = async (e) => {
     e.preventDefault();
     if (!email && !password) {
@@ -23,7 +25,7 @@ export default function CandidateLogin() {
     }
 
     try {
-      const { data } = await axios.post(
+      const { data , cookie} = await axios.post(
         "http://localhost:8000/api/candidate/login",
         {
           email: email,
@@ -36,31 +38,35 @@ export default function CandidateLogin() {
         }
       );
 
-        console.log(data.success)
+        console.log(cookie)
       if (data.success) {
         toast.success(data.message);
         setAuthenticated(true);
-        console.log(authenticated)
+        
       }
       else
       {
-        return toast.error("Enter Correct password")
+        return toast.error(data.message)
       }
     } catch (error) {
       toast.error(error.message);
     }
   };
-
-  if (authenticated) {
-    navigate("/jobs")
-  }
+  
+  useEffect(() => {
+    if (authenticated) {
+      setCookie("username", email, 1);
+      navigate("/candidate");
+      
+    }
+  }, [authenticated]);
   return (
     <>
       <div className="">
         <div className="p-8 lg:w-1/2 mx-auto">
           <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
-            <p className="text-center text-sm text-gray-500 font-light">
-              Sign in with credentials
+            <p className="text-center text-sm text-gray-500 font-semibold">
+              LOGIN AS A CANDIDATE
             </p>
 
             <form

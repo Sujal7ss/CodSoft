@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 export default function EmployerDashboard() {
   return (
     <>
-      <Navbar pages="Employer" />
+      
       
       <EmployerProfile />
         

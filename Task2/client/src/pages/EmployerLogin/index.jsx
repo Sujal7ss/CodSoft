@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -9,6 +9,7 @@ export default function EmployerLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
+  const [company, setCompany] = useState("");
 
   const loginf = async (e) => {
     e.preventDefault();
@@ -31,31 +32,44 @@ export default function EmployerLogin() {
         }
       );
 
-        console.log(data.success)
+     
       if (data.success) {
         toast.success(data.message);
+
         setAuthenticated(true);
-        console.log(authenticated)
-      }
-      else
-      {
-        return toast.error(data.message)
+        if (data.company.companyName !== undefined) {
+          setCompany(data.company);
+        }
+        
+      } else {
+        return toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
     }
   };
-
-  if (authenticated) {
-    navigate("/companyDetails")
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
+  useEffect(() => {
+    if (authenticated) {
+      setCookie("username", email, 1);
+      if (company == "") {
+        return navigate("/companyDetails");
+      }
+      return navigate("/employer");
+    }
+  }, [authenticated]);
   return (
     <>
       <div className="">
         <div className="p-8 lg:w-1/2 mx-auto">
           <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
-            <p className="text-center text-sm text-gray-500 font-light">
-              Sign in with credentials
+            <p className="text-center text-sm text-gray-500 font-semibold">
+              LOGIN AS A EMPLOYER
             </p>
 
             <form

@@ -2,10 +2,15 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 const CandidatesSchema = new mongoose.Schema({
   name: String,
-  email: String,
+  role:String,
+  description:String,
   password: String,
-  City: String,
-  State: String,
+  city: String,
+  state: String,
+  country: String,
+  email: String,
+  phone: Number,
+  skills: [String],
   tokens: [
     {
       token: {
@@ -14,6 +19,7 @@ const CandidatesSchema = new mongoose.Schema({
       },
     },
   ],
+  appliedJobs: [ {type:Object}]
 });
 
 CandidatesSchema.methods.generateAuthToken = async function () {
