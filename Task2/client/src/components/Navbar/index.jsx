@@ -14,7 +14,7 @@ export default function Navbar({ pages }) {
   // console.log(navbar[0].path)
   function newJobHandler(){
     
-    return navigate("/postJob")
+    return navigate("postJob")
   }
   return (
     <header className="navbar h-20 bg-C0DFED  top-0">

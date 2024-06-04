@@ -4,16 +4,17 @@ import toast from "react-hot-toast";
 import getCookie from "../../components/cookie";
 import axios from "axios";
 
-export default function AppliedJobs() {
+export default function AppliedJobs({user="candidate"}) {
   const [jobList, setJobList] = useState([]);
 
   useEffect(() => {
     const getList = async () => {
-      let user = getCookie("username");
-      if (user != "") {
+      let userId = getCookie("username");
+      if (userId != "") {
         try {
+          console.log("Fetch applied jobs")
           const { data } = await axios.get(
-            `${process.env.BASE_URL}/api/candidate/appliedJobs?email=${user}`
+            `http://localhost:8000/api/candidate/appliedJobs?email=${userId}`
           );
 
           if (data.success) {
@@ -40,7 +41,7 @@ export default function AppliedJobs() {
 
   return (
     <>
-      <JobListing JobList={jobList} applied={true} />
+      <JobListing JobList={jobList} applied={true} user={user}/>
     </>
   );
 }

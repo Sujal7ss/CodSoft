@@ -3,7 +3,7 @@ import JobListing from "../JobListing";
 
 import axios from "axios";
 
-export default function CandidateHome() {
+export default function CandidateHome({user}) {
   const [jobList, setJobList] = useState([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function CandidateHome() {
   }, []);
   return (
     <>
-      <JobListing JobList={jobList} />
+      <JobListing JobList={jobList} user={user}/>
     </>
   );
 }

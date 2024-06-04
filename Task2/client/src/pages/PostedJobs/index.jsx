@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 
 
-function PostedJobs() {
+function PostedJobs({user}) {
 
     const [jobList, setJobList] = useState([])
     function getCookie(cname) {
@@ -51,8 +51,8 @@ function PostedJobs() {
   return (
     <>
       <>
-        <Navbar pages="Employer" />
-        {jobList.length > 0 && <JobListing JobList={jobList} />}
+        
+        {jobList.length > 0 && <JobListing JobList={jobList} user={user}/>}
         {jobList.length == 0 }
       </>
     </>

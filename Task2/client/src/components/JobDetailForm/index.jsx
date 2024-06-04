@@ -11,7 +11,7 @@ function JobDetailForm() {
 
   const [title, setTitle] = useState("");
   const [jobType, setJobType] = useState(0);
-  const [experiece, setExperiece] = useState("");
+  const [experience, setExperience] = useState("");
   const [salary, setSalary] = useState();
   const [jobDescription, setJobDescription] = useState();
   const [city, setCity] = useState();
@@ -19,9 +19,9 @@ function JobDetailForm() {
   const [country, setCountry] = useState();
 
   useEffect(() => {
-  if (details) {
-    navigate("/postedJobs")
-  }
+    if (details) {
+      navigate("/employer/postedJobs");
+    }
   }, [details, navigate]);
 
   function getCookie(cname) {
@@ -41,10 +41,10 @@ function JobDetailForm() {
 
   const setJobDetails = async (e) => {
     e.preventDefault();
-    if (!title || !jobType || !experiece || !salary || !jobDescription) {
+    if (!title || !jobType || !experience || !salary || !jobDescription || !city || !state || !country) {
       return toast.error("All fields are required");
     }
-    if (experiece < 0) {
+    if (experience < 0) {
       return toast.error("Experience Cant be negative");
     }
     try {
@@ -54,19 +54,19 @@ function JobDetailForm() {
         {
           title: title,
           jobType: jobType,
-          experiece: experiece,
+          experiece: experience,
           salary: salary,
           jobDescription: jobDescription,
-          city:city,
-          state:state,
-          country:country
+          city: city,
+          state: state,
+          country: country,
         }
       );
-      console.log(data);
+      
 
       if (data.success) {
         toast.success(data.message);
-        setDetails(true);   
+        setDetails(true);
       } else {
         toast.error(data.message);
       }
@@ -76,12 +76,7 @@ function JobDetailForm() {
   };
 
   return (
-    <form
-      className="mt-6"
-      onSubmit={(e) => {
-        setJobDetails(e);
-      }}
-    >
+    <form className="mt-6">
       <div className="relative mb-5">
         <div className="absolute left-0 inset-y-0 flex items-center"></div>
       </div>
@@ -97,16 +92,21 @@ function JobDetailForm() {
       </div>
 
       <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="jobType"
-          type="text"
-          placeholder="Jobtype"
-          name="Jobtype"
+        <select
+          id="jobtype"
+          name="jobtype"
+          required
+          value={jobType}
+
           onChange={(e) => {
             setJobType(e.target.value);
           }}
-        />
+          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+        >
+          <option value="part-time">Part-Time</option>
+          <option value="full-time">Full-Time</option>
+          <option value="internship">Internship</option>
+        </select>
       </div>
       <div className="relative mt-3">
         <input
@@ -116,7 +116,7 @@ function JobDetailForm() {
           placeholder="Experience"
           name="experience"
           onChange={(e) => {
-            setExperiece(e.target.value);
+            setExperience(e.target.value);
           }}
         />
       </div>
@@ -129,12 +129,10 @@ function JobDetailForm() {
           placeholder="Salary"
           allowDecimals={false}
           allowNegativeValue={false}
-          onValueChange={(value, name, values) =>
-            setSalary(value)
-          }
+          onValueChange={(value, name, values) => setSalary(value)}
         />
       </div>
-     
+
       <div className="relative mt-3">
         <textarea
           className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
@@ -188,6 +186,9 @@ function JobDetailForm() {
         <button
           className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
           type="submit"
+          onClick={(e) => {
+            setJobDetails(e);
+          }}
         >
           NEXT
         </button>

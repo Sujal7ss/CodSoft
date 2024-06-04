@@ -3,8 +3,7 @@ import JobDetailForm from "../../components/JobDetailForm/index.jsx";
 function PostJobs() {
   return (
     <>
-      <Navbar pages="Employer" />
-      <>
+      
         <div className="">
           <div className="p-8 lg:w-1/2 mx-auto">
             <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
@@ -15,7 +14,7 @@ function PostJobs() {
             </div>
           </div>
         </div>
-      </>
+
     </>
   );
 }

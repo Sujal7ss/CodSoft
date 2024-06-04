@@ -9,6 +9,7 @@ import axios from "axios";
 import getCookie from "../../components/cookie.js";
 import Skills from "../../components/Skills";
 import ReactModal from "react-modal";
+import AppliedCandidates from "../../components/AppliedCandidates/index.jsx";
 
 export default function JobDetails() {
   const [searchParams] = useSearchParams();
@@ -30,7 +31,7 @@ export default function JobDetails() {
   const [apply, setApply] = useState(false);
   const [email, setEmail] = useState();
   const [resume, setResume] = useState();
-
+  const [candidate, setCandidate] = useState([])
   useEffect(() => {
     const getData = async () => {
       try {
@@ -38,14 +39,15 @@ export default function JobDetails() {
           `http://localhost:8000/api/candidate/jobDetails/${id}`
         );
         const job = data.job;
-        console.log(job);
-        console.log(getCookie("usename"));
+        
+        
         setCompanyName(job.companyName);
         setRole(job.title);
         setSalary(job.salary);
         setLocation(job.city);
         setDescription(job.jobDescription);
         setLink(job.jobLink);
+        setCandidate(job.appliedCandidates)
 
         if (data.job.authorId === getCookie("username")) {
           setUser("true");
@@ -101,8 +103,8 @@ export default function JobDetails() {
       const formData = new FormData();
       formData.append("email", email);
       formData.append("resume", resume);
-      formData.append("jobId", id)
-  
+      formData.append("jobId", id);
+
       const { data } = await axios.post(
         "http://localhost:8000/api/candidate/apply",
         formData,
@@ -112,7 +114,7 @@ export default function JobDetails() {
           },
         }
       );
-  
+
       if (data.success) {
         toast.success(data.message);
         // Clear email and resume after successful submission
@@ -232,13 +234,13 @@ export default function JobDetails() {
             )}
           </div>
 
-          {!edit && (
+          {!edit && !user && (
             <Button
               className={"mr-20"}
               style={"bg-C0DFED"}
               onSelect={applyHandler}
             >
-              Apply Nowe
+              Apply Now
             </Button>
           )}
           {/* {edit && (
@@ -304,6 +306,9 @@ export default function JobDetails() {
               />
             )}
           </div>
+        </div>
+        <div className="flex flex-row justify-evenly border h-44 mt-4 bg-slate-50 items-center">
+          <AppliedCandidates candidates={candidate}/>
         </div>
       </div>
     </>

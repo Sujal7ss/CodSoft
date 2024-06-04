@@ -2,8 +2,8 @@ import { useState } from "react";
 import img from "../../assets/company.svg";
 import Skills from "../Skills"
 import { Link } from "react-router-dom";
-export default function JobsCard({job, applied}) {
-  console.log(job._id)
+export default function JobsCard({job, applied, user}) {
+  
   
   
   
@@ -32,7 +32,7 @@ export default function JobsCard({job, applied}) {
           <h3>{job.YOE}</h3>
         </div>
         {!applied && <div className="text-lg font-semibold mt-5 flex flex-row justify-center items-center">
-          <Link to={`/candidate/jobsDetails?id=${job._id}`}><button className="bg-sky-600  w-36 h-10">Apply Now</button></Link>
+          <Link to={`/${user}/jobsDetails?id=${job._id}`}><button className="bg-sky-600  w-36 h-10">Apply Now</button></Link>
         </div>}
       </div>
     </div>

@@ -30,8 +30,8 @@ function App() {
         </Route>
 
         <Route path="candidate" element={<CandidateLayout />}>
-          <Route index element={<CandidateHome />} />
-          <Route path="appliedJobs" element={<AppliedJobs />} />
+          <Route index element={<CandidateHome user={"candidate"}/>} />
+          <Route path="appliedJobs" element={<AppliedJobs user={"candidate"}/>} />
           <Route path="jobsDetails" element={<JobDetails />} />
           <Route path="aboutme" element={<CandidateAboutMe />} />
         </Route>
@@ -40,7 +40,8 @@ function App() {
           <Route index element={<EmployerDashboard />} />
           <Route path="companyDetails" element={<CompanyDetails />} />
           <Route path="postJob" element={<PostJobs />} />
-          <Route path="postedJobs" element={<PostedJobs />} />
+          <Route path="postedJobs" element={<PostedJobs user={"employer"} />} />
+          <Route path="jobsDetails" element={<JobDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
