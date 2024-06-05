@@ -4,12 +4,14 @@ import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import validator from "validator";
 
 function CandidateSignup() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [passwd, setPasswd] = useState("");
+  const [message, setMessage] = useState("");
 
   const signup = async (e, name, email, passwd, City, State, Pincode) => {
     e.preventDefault();
@@ -23,6 +25,12 @@ function CandidateSignup() {
       return toast.error("Please enter a password");
     }
 
+    if (validator.isEmail(email)) {
+      setMessage("Thank you");
+    } else {
+      return setMessage("Please, enter valid Email!");
+    }
+
     try {
       const { data } = await axios.post(
         "http://localhost:8000/api/candidate/signup",
@@ -32,7 +40,7 @@ function CandidateSignup() {
           password: passwd,
         }
       );
-      console.log(data.success)
+      console.log(data.success);
       if (data.success) {
         navigate("/candidateLogin");
         return toast.success("Candidate Signup Successful");
@@ -95,6 +103,7 @@ function CandidateSignup() {
                     setEmail(e.target.value);
                   }}
                 />
+                <span>{message}</span>
                 <div className="absolute left-0 inset-y-0 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
