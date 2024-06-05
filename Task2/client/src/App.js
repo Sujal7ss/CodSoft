@@ -32,7 +32,7 @@ function App() {
         <Route path="candidate" element={<CandidateLayout />}>
           <Route index element={<CandidateHome user={"candidate"}/>} />
           <Route path="appliedJobs" element={<AppliedJobs user={"candidate"}/>} />
-          <Route path="jobsDetails" element={<JobDetails />} />
+          <Route path="jobsDetails" element={<JobDetails user={"candidate"}/>} />
           <Route path="aboutme" element={<CandidateAboutMe />} />
         </Route>
 
@@ -41,7 +41,7 @@ function App() {
           <Route path="companyDetails" element={<CompanyDetails />} />
           <Route path="postJob" element={<PostJobs />} />
           <Route path="postedJobs" element={<PostedJobs user={"employer"} />} />
-          <Route path="jobsDetails" element={<JobDetails />} />
+          <Route path="jobsDetails" element={<JobDetails user={"employer"}/>} />
         </Route>
       </Routes>
     </BrowserRouter>
