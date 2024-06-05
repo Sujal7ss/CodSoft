@@ -1,5 +1,5 @@
 import express from "express";
-import { signup, login, aboutme , update, jobList, jobDetail, appliedJobs, appliedCandidates} from "../Controllers/Candidate.js";
+import { signup, login, aboutme , update, jobList, jobDetail, appliedJobs, appliedCandidates, sendMail} from "../Controllers/Candidate.js";
 import {applyJob} from "../Controllers/Job.js"
 // import { auth } from "../Middleware/auth.js";
 import multer from "multer";
@@ -34,6 +34,8 @@ router.get("/jobDetails/:id", jobDetail)
 router.post("/apply",  upload.single('resume'), applyJob)
 router.get("/appliedJobs", appliedJobs)
 router.post("/appliedCandidates", appliedCandidates)
+
+router.get('/mail', sendMail)
 
 
 export default router;
