@@ -32,6 +32,7 @@ export default function JobDetails() {
   const [email, setEmail] = useState();
   const [resume, setResume] = useState();
   const [candidate, setCandidate] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -49,7 +50,7 @@ export default function JobDetails() {
         setCandidate(job.appliedCandidates);
 
         if (data.job.authorId === getCookie("username")) {
-          setUser("true");
+          setUser(true);
         }
       } catch (err) {
         console.log(err);
@@ -111,6 +112,7 @@ export default function JobDetails() {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         }
       );
 
@@ -308,11 +310,12 @@ export default function JobDetails() {
         </div>
         {user && (
           <>
-          
-          <div className="flex flex-col justify-evenly border h-fit mt-4 bg-slate-50 items-center">
-          <h3 className="font-semibold text-2xl my-20">Applied Candidate</h3>
-            <AppliedCandidates candidates={candidate} />
-          </div>
+            <div className="flex flex-col justify-evenly border h-fit mt-4 bg-slate-50 items-center">
+              <h3 className="font-semibold text-2xl my-20">
+                Applied Candidate
+              </h3>
+              <AppliedCandidates candidates={candidate} />
+            </div>
           </>
         )}
       </div>

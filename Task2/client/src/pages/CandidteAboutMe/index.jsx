@@ -20,47 +20,75 @@ function CandidateAboutMe() {
   const [edit, setEdit] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      let user = getCookie("username");
-      
-      if (user != "") {
-        try {
-          const { data } = await axios.get(
-            `http://localhost:8000/api/candidate/aboutme?email=${user}`
-          );
-          if (data) {
-            console.log(data);
-
-            setName(data.name);
-            setRole(data.role)
-            setDescription(data.description)
-            setCity(data.city)
-            setState(data.state)
-            setCountry(data.country)
-            setEmail(data.email);
-            setPhone(data.phone)
-            setSkills(data.skills)
-
-            // setToken(response.data.token); // Assuming the response contains a token field
-          } else {
-            toast.error("something went wrong");
+      try {
+        const { data } = await axios.get(
+          `http://localhost:8000/api/candidate/aboutme`,
+          {
+            headers: {
+              "content-type": "application/json",
+            },
+            withCredentials: true,
           }
-        } catch (err) {
-          console.log("Error fetching data");
-          console.error(err);
+        );
+        console.log(data)
+        if (!data.success) {
+          toast.error("Login first");
+          setTimeout(() => {
+            window.location.href = "/candidateLogin";
+          }, 2000);
+          return
         }
-      } else {
-        toast.error("Login first");
-        setTimeout(()=> {
+        const candidate = data.candidate;
 
-          window.location.href = "/candidateLogin";
-        },2000)
+        if (candidate) {
+          if (candidate.name) {
+            setName(candidate.name);
+          }
+          if (candidate.role) {
+            setRole(candidate.role);
+          }
+          if (candidate.description) {
+            setDescription(candidate.description);
+          }
+          if (candidate.city) {
+            setCity(candidate.city);
+          }
+          if (candidate.state) {
+            setState(candidate.state);
+          }
+          if (candidate.country) {
+            setCountry(candidate.country);
+          }
+          if (candidate.email) {
+            setEmail(candidate.email);
+          }
+          if (candidate.phone) {
+            setPhone(candidate.phone);
+          }
+          if (candidate.skills) {
+            setSkills(candidate.skills);
+          }
+          
+
+          // setToken(response.data.token); // Assuming the response contains a token field
+        } else {
+          toast.error("something went wrong");
+        }
+      } catch (err) {
+        console.log("Error fetching data");
+        console.error(err);
       }
+      // else {
+      //   toast.error("Login first");
+      //   setTimeout(()=> {
+
+      //     window.location.href = "/candidateLogin";
+      //   },2000)
+      // }
     };
 
     fetchData();
   }, []);
-
-  
 
   const handleSave = async () => {
     setEdit((e) => !e);
@@ -84,7 +112,6 @@ function CandidateAboutMe() {
 
   return (
     <>
-      
       <section className="bg-gray-100 py-12">
         <div className="max-w-4xl mx-auto px-4 flex sm:px-6 lg:px-8">
           <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col gap-10">
@@ -160,7 +187,7 @@ function CandidateAboutMe() {
                   </p>
                 )}
 
-                 <p className="text-gray-600">Email: {email}</p>
+                <p className="text-gray-600">Email: {email}</p>
 
                 {edit && (
                   <>
@@ -221,7 +248,11 @@ function CandidateAboutMe() {
                   />
                 </>
               )}
-              {!edit && <p className="text-gray-700 w-full overflow-scroll">{description}</p>}
+              {!edit && (
+                <p className="text-gray-700 w-full overflow-scroll">
+                  {description}
+                </p>
+              )}
             </div>
             <div className="px-6 py-4 border-t border-gray-200">
               <h3 className="text-xl font-semibold text-gray-900 mb-2">

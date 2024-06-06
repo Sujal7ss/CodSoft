@@ -25,7 +25,7 @@ export default function CandidateLogin() {
     }
 
     try {
-      const { data , cookie} = await axios.post(
+      const {data} = await axios.post(
         "http://localhost:8000/api/candidate/login",
         {
           email: email,
@@ -34,12 +34,14 @@ export default function CandidateLogin() {
         {
           headers: {
             "content-type": "application/json",
-          }
+          },
+          withCredentials: true,
         }
       );
-
-        console.log(cookie)
+            
+      
       if (data.success) {
+        console.log(document.cookie)
         toast.success(data.message);
         setAuthenticated(true);
         
@@ -55,7 +57,6 @@ export default function CandidateLogin() {
   
   useEffect(() => {
     if (authenticated) {
-      setCookie("username", email, 1);
       navigate("/candidate");
       
     }

@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import { config } from "dotenv";
 import JobList from "./assets/JobList.js";
 import cors from "cors";
@@ -11,8 +12,9 @@ import employer from "./Routes/Employer.js"
 const app = express();
 
 //env variables
+config()
 config({
-  path: "config.env",
+  path: ".env",
 });
 
 //mongoDB connection
@@ -27,14 +29,16 @@ catch(err)
 }
 
 //Middlewares
-app.use(express.static("public"));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // to handle JSON payloads
+app.use(express.static('public'));
 
 //CORS
 app.use(
   cors({
     origin: "http://localhost:3000", 
+    credentials: true,
   })
 );
 

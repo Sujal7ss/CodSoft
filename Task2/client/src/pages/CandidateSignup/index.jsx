@@ -5,6 +5,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
+import ReactModal from "react-modal";
+import EmailVerificationModal from "../../components/EmailVerificationModal"
 
 function CandidateSignup() {
   const navigate = useNavigate();
@@ -12,6 +14,8 @@ function CandidateSignup() {
   const [email, setEmail] = useState("");
   const [passwd, setPasswd] = useState("");
   const [message, setMessage] = useState("");
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const signup = async (e, name, email, passwd, City, State, Pincode) => {
     e.preventDefault();
@@ -25,9 +29,7 @@ function CandidateSignup() {
       return toast.error("Please enter a password");
     }
 
-    if (validator.isEmail(email)) {
-      setMessage("Thank you");
-    } else {
+    if (!validator.isEmail(email)) {
       return setMessage("Please, enter valid Email!");
     }
 
@@ -40,19 +42,29 @@ function CandidateSignup() {
           password: passwd,
         }
       );
-      console.log(data.success);
+      console.log(data);
       if (data.success) {
         navigate("/candidateLogin");
         return toast.success("Candidate Signup Successful");
       }
-      return toast.error("User Already exists");
+      else
+      {
+        return toast.error(data.message);
+      }
+      
     } catch (err) {
       return toast.error(err.message);
     }
   };
+  
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
+    <EmailVerificationModal isOpen={isModalOpen} onRequestClose={handleCloseModal} />
       <div className="">
         <div className="p-8 lg:w-1/2 mx-auto">
           <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">

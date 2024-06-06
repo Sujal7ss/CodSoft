@@ -1,43 +1,55 @@
 import { Candidates } from "../Models/Candidate.js";
 import { Jobs } from "../Models/Job.js";
+import { sendWelcomeEmail } from "./mail.js";
+import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const results = await Candidates.findOne({ email: email });
-    console.log(results);
-    if (results === null) {
-      return res.status(200).json({
+    const user = await Candidates.findOne({ email: email });
+
+    if (!user) {
+      return res.status(401).json({
         success: false,
         message: "Invalid Credentials",
       });
     }
 
-    const isMatch = bcrypt.compare(password, results.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    // console.log(token);
     if (isMatch) {
-      return res.status(200).json({
+      // Generate JWT token
+      const token = jwt.sign(
+        { userId: user._id.toString() },
+        process.env.JWTSECRETKEY
+      );
+
+      // Set the token as a cookie
+      return res.cookie("token", token, { httpOnly: false , maxAge: 24 * 60 * 60 * 1000} ).status(200).json({
         success: true,
-        message: "user verified",
+        message: "User verified",
       });
     } else {
-      return res.status(200).json({
+      return res.status(401).json({
         success: false,
         message: "Invalid Credentials.",
       });
     }
   } catch (err) {
     console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error. Please try again later.",
+    });
   }
 };
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
-
   try {
     const isUserExist = await Candidates.findOne({ email: email });
     if (isUserExist) {
@@ -46,7 +58,21 @@ const signup = async (req, res) => {
         message: "User already exist",
       });
     }
+
+    if (password.length < 8 || password.length > 20) {
+      console.log("password is short");
+      return res.status(200).json({
+        success: false,
+        message: "Password too short",
+      });
+    }
+
+    // const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    // console.log(otp)
+    sendWelcomeEmail(email);
+
     const hash = await bcrypt.hash(password, 10);
+
     const candidate = new Candidates({
       name: name,
       email: email,
@@ -67,12 +93,15 @@ const signup = async (req, res) => {
 };
 
 const aboutme = async (req, res) => {
-  // console.log(req.query)
-  const email = req.query.email;
-  console.log(email);
-  const candidate = await Candidates.findOne({ email });
-  console.log(candidate);
-  res.json(candidate);
+  console.log(req.userId);
+
+  if (req.candidate) {
+    res
+      .status(200)
+      .json({ success: true, candidate: req.candidate, isAuthenticated: true });
+  } else {
+    res.status(200).json({ success: false, isAuthenticated: false });
+  }
 };
 
 const update = async (req, res) => {
@@ -90,7 +119,7 @@ const update = async (req, res) => {
 const jobList = async (req, res) => {
   try {
     const list = await Jobs.find({});
-    console.log(list);
+    // console.log(list);
     res.status(200).json({
       success: true,
       jobs: list,
@@ -101,10 +130,8 @@ const jobList = async (req, res) => {
 };
 const appliedJobs = async (req, res) => {
   try {
-    const email = req.query.email;
-    const candidate = await Candidates.findOne({ email });
-    // console.log(candidate.appliedJobs)
-    const list = candidate.appliedJobs;
+    
+    const list = req.candidate.appliedJobs;
     // console.log(list)
     res.status(200).json({
       success: true,
@@ -130,13 +157,11 @@ const appliedCandidates = async (req, res) => {
   try {
     const { emails } = req.body;
     if (!emails) {
-      return res
-        .status(200)
-        .json({
-          success: false,
-          message: "Something went wrong",
-          candidates: [],
-        });
+      return res.status(200).json({
+        success: false,
+        message: "Something went wrong",
+        candidates: [],
+      });
     }
 
     const candidates = [];
@@ -145,21 +170,17 @@ const appliedCandidates = async (req, res) => {
       candidates.push(candidate);
     }
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Applied Candidates",
-        candidates: candidates,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Applied Candidates",
+      candidates: candidates,
+    });
   } catch (err) {
-    return res
-      .status(200)
-      .json({
-        success: false,
-        message: "Something went wrong",
-        candidates: [],
-      });
+    return res.status(200).json({
+      success: false,
+      message: "Something went wrong",
+      candidates: [],
+    });
   }
 };
 
@@ -185,11 +206,10 @@ const sendMail = async (req, res) => {
     });
 
     console.log("Message sent: %s", info.messageId);
-    res.send(info)
+    res.send(info);
     // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
   }
-  mail().catch(console.error)
- 
+  mail().catch(console.error);
 };
 
 export {

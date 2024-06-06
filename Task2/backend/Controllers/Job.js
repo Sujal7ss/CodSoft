@@ -1,6 +1,8 @@
 import { Jobs } from "../Models/Job.js";
 import { Employers } from "../Models/Employer.js";
 import { Candidates } from "../Models/Candidate.js";
+import jwt from "jsonwebtoken";
+import { sendAppliedMail } from "./mail.js";
 
 const jobDetails = async (req, res) => {
   const {
@@ -97,15 +99,39 @@ const applyJob = async (req, res) => {
       });
     }
 
-    // Process the uploaded file here
-    const job = await Jobs.findOne({ _id: req.body.jobId });
-    job.appliedCandidates.push(req.body.email);
-    await job.save();
+    // Process the uploaded file
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
+    const { userId } = decoded;
 
-    const candidate = await Candidates.findOne({ email: req.body.email });
-    candidate.appliedJobs.push(job);
+    const candidate = await Candidates.findOne({ _id: userId });
+
+    const job = await Jobs.findOne({ _id: req.body.jobId });
+
+    if (!job.appliedCandidates.some(email => email === candidate.email)) {
+      job.appliedCandidates.push(candidate.email);
+    }
+    else{
+      return res.status(200).json({
+        success: false,
+        message: "Already Applied",
+      });
+    }
+    await job.save();
+    console.log(req.body.jobId)
+    if (!candidate.appliedJobs.some(job => job._id.toString() === req.body.jobId)) {
+      candidate.appliedJobs.push(job);
+    }
+    else{
+      return res.status(200).json({
+        success: false,
+        message: "Already Applied",
+      });
+    }
     await candidate.save();
-    
+
+    sendAppliedMail(candidate.email, job.title, job.companyName);
+
     res.status(200).json({
       success: true,
       message: "File uploaded successfully",
