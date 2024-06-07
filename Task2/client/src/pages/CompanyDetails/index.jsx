@@ -4,7 +4,6 @@ import CompanyDetailsForm from "../../components/CompanyDetailsForm";
 export default function CompanyDetails() {
   return (
     <>
-      <Navbar pages="Employer" />
       <>
       <div className="">
         <div className="p-8 lg:w-1/2 mx-auto">

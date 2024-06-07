@@ -58,7 +58,7 @@ export default function EmployerLogin() {
     if (authenticated) {
       setCookie("username", email, 1);
       if (company == "") {
-        return navigate("/companyDetails");
+        return navigate("/employer/companyDetails");
       }
       return navigate("/employer");
     }
