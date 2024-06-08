@@ -94,15 +94,13 @@ export default function JobDetails() {
   };
 
   const handleApply = async () => {
-    if (!email) {
-      return toast.error("Please provide email");
-    }
+    
     if (!resume) {
       return toast.error("Please provide resume");
     }
     try {
       const formData = new FormData();
-      formData.append("email", email);
+      
       formData.append("resume", resume);
       formData.append("jobId", id);
 
@@ -137,51 +135,38 @@ export default function JobDetails() {
       <ReactModal isOpen={apply}>
         <button onClick={applyHandler}>Close</button>
         <div className="">
-          <div className="p-8 lg:w-1/2 mx-auto">
-            <div className="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24">
-              <p className="text-center text-sm text-gray-500 font-semibold">
+          <div className="mt-3 md:p-8 lg:w-1/2 mx-auto">
+            <div className="bg-gray-100 rounded-lg py-6 md:py-12 px-4 lg:px-24">
+              <p className="text-center text-xs md:text-lg text-gray-500 font-semibold">
                 APPLY TO THIS JOB?
               </p>
 
               <div className="mt-6">
-                <div className="relative mb-5">
-                  <div className="absolute left-0 inset-y-0 flex items-center"></div>
-                </div>
-                <div className="relative">
-                  <input
-                    className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-                    id="email"
-                    type="text"
-                    placeholder="Email"
-                    name="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <div className="absolute left-0 inset-y-0 flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-7 w-7 ml-3 text-gray-400 p-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                    </svg>
-                  </div>
-                </div>
+                
+              <div class="relative z-0 w-full mb-5 group">
+                <input
+                  type="text"
+                  name="floating_name"
+                  id="floating_name"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                  // onChange={(e) => {
+                  //   setName(e.target.value);
+                  // }}
+                />
+                <label
+                  for="floating_name"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Name
+                </label>
+              </div>
+                
                 <div className="relative mt-3">
+                  <p className="text-sm underline">Upload resume</p>
                   <input
-                    className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-                    id="username"
-                    type="text"
-                    placeholder="Password"
-                    name="password"
-                    // onChange={}
-                  />
-                </div>
-                <div className="relative mt-3">
-                  <p>Upload resume</p>
-                  <input
-                    className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+                    className="text-sm w-32 appearance-none border md:pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md md:w-full md:py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
                     id="username"
                     type="file"
                     name="resume"
@@ -190,13 +175,13 @@ export default function JobDetails() {
                 </div>
 
                 <div className="flex items-center justify-center mt-8">
-                  <button
-                    className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  <button 
+                    className="text-white py-1 px-2 md:py-2 md:px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
                     // type="submit"
                     method="post"
                     onClick={handleApply}
                   >
-                    Submit Application
+                    Submit 
                   </button>
                 </div>
                 <hr className="m-4" />
@@ -207,12 +192,13 @@ export default function JobDetails() {
       </ReactModal>
       <div className="company w-11/12 m-auto mb-10">
         {/* Header */}
-        <div className="flex flex-row justify-evenly border h-44 mt-4 bg-slate-50 items-center">
+        {/* <div className="card w-72 shadow-lg relative flex flex-col md:flex-row border top-2 hover:top-0 hover:cursor-pointer  border-zinc-300 border-r-4 border-b-4 md:w-11/12 md:h-60 p-3 rounded-lg  mb-5"></div> */}
+        <div className="flex flex-row shadow-lg h-20 justify-evenly border md:h-44 mt-4  bg-slate-50 items-center border-zinc-300 border-r-2 border-b-2 rounded-lg">
           {/* <img src={img} alt="companies logo" className="w-14 ml-20 mr-9" /> */}
-          <img src={img} alt="companies logo" className="w-14 ml-20 mr-9" />
-          <div className="title flex flex-col h-52 items-center justify-center">
+          <img src={img} alt="companies logo" className="mx-5 w-10 md:w-14 md:ml-20 md:mr-9" />
+          <div className="title flex flex-col md:h-42 items-center justify-between">
             {!edit && (
-              <h3 className="title text-4xl font-bold">{companyName}</h3>
+              <h3 className="title md:text-2xl font-semibold underline">{companyName}</h3>
             )}
             {edit && (
               <input
@@ -224,7 +210,7 @@ export default function JobDetails() {
               />
             )}
 
-            {!edit && <p className="text-slate-600">{role}</p>}
+            {!edit && <p className="text-slate-600 md:text-4xl">{role}</p>}
             {edit && (
               <input
                 className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
@@ -238,11 +224,11 @@ export default function JobDetails() {
 
           {!edit && !user && (
             <Button
-              className={"mr-20"}
+              className={"md:mr-20"}
               style={"bg-C0DFED"}
               onSelect={applyHandler}
             >
-              Apply Now
+              <p className="text-sm font-semibold">Apply</p>
             </Button>
           )}
           {/* {edit && (
@@ -264,10 +250,10 @@ export default function JobDetails() {
             </button>
           )}
         </div>
-        <div className="flex flex-row justify-evenly border h-44 mt-4 bg-slate-50 items-center">
+        <div className="flex flex-row shadow-lg h-20 justify-evenly border md:h-44 mt-4  bg-slate-50 items-center border-zinc-300 border-r-2 border-b-2 rounded-lg">
           <div>
             <h2 className="text-gray-400 text-md m-auto">Salary</h2>
-            {!edit && <p className="font-bold text-xl m-auto">Rs {salary}</p>}
+            {!edit && <button className="text-md`  hover:bg-gray-500 border border-none bg-gray-300 w-28 rounded-md">Rs {salary}</button>}
             {edit && (
               <input
                 className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
@@ -280,7 +266,7 @@ export default function JobDetails() {
           </div>
           <div>
             <h2 className="text-gray-400 text-md m-auto">Location</h2>
-            {!edit && <p className="font-bold text-xl m-auto">{location}</p>}
+            {!edit && <button className="text-md`  hover:bg-gray-500 border border-none bg-gray-300 w-28 rounded-md">{location}</button>}
             {edit && (
               <input
                 className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
@@ -293,9 +279,9 @@ export default function JobDetails() {
           </div>
         </div>
 
-        <div className="flex flex-row justify-between items-start ">
-          <div className=" border w-8/12 mt-4 bg-slate-50 p-5">
-            <h1 className="text-2xl font-semibold my-5">About Internship</h1>
+        <div className=" shadow-lg  p-5 justify-evenly border md:w-8/12 mt-4  bg-slate-50 items-center border-zinc-300 border-r-2 border-b-2 rounded-lg">
+          {/* <div className=" border md:w-8/12 mt-4 bg-slate-50 p-5"> */}
+            <h1 className="text-lg items-center  md:text-2xl font-semibold my-2 self-center  md:my-5">About Internship</h1>
 
             {!edit && <p>{description}</p>}
             {edit && (
@@ -308,7 +294,7 @@ export default function JobDetails() {
               />
             )}
           </div>
-        </div>
+        
         {user && (
           <>
             <div className="flex flex-col justify-evenly border h-fit mt-4 bg-slate-50 items-center">
