@@ -17,14 +17,14 @@ export default function Navbar({ pages }) {
     return navigate("postJob")
   }
   return (
-    <header className="navbar h-20 bg-C0DFED  top-0">
-      <nav className="container flex flex-row justify-evenly items-center p-7 ">
+    <header className="navbar h-20 bg-C0DFED w-full  top-0 ">
+      <nav className="container flex flex-row  justify-center bg sm:justify-between items-center p-7 w-full">
         <Link to={logo}>
           <Logo />
         </Link>
-        <div className="w-fit ">
+        <div className="">
           <ul
-            className="flex flex-row w-full gap-10 flex-wrap items-center justify-between  text-xs 
+            className="hidden md:flex flex-row w-full gap-10 flex-wrap items-center justify-between  text-xs 
                 font-bold
                 cursor-pointer 
                 text-gray-500"
@@ -38,7 +38,7 @@ export default function Navbar({ pages }) {
             ))}
           </ul>
         </div>
-        {button === "LoginButton" && <LoginButton />}
+        {button === "LoginButton" && <LoginButton style={"hidden sm:flex  md:flex-col"} />}
         {button.name === "Profile" && <Button onSelect={newJobHandler}>Post a Job</Button>}
       </nav>
     </header>

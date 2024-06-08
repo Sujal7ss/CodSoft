@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function LoginButton({ style }) {
   return (
-    <div className={`w-60 flex flex-row justify-around  ${style}`}>
+    <div
+      className={` ${style} w-20  lg:w-60 h-fit lg:flex-row align-middle items-center `}
+    >
       <Link to="/employerSignup">
         <Button style="bg-C0DFED border-blue-300 text-cyan-700">
           Post a Job
