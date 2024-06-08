@@ -2,7 +2,7 @@ import { useState } from "react";
 import img from "../../assets/company.svg";
 import Skills from "../Skills";
 import { Link } from "react-router-dom";
-export default function JobsCard({ job, user }) {
+export default function JobsCard({ job, applied, user }) {
   return (
     <div className="card relative flex border  border-zinc-300 border-r-4 border-b-4  w-11/12 h-60 p-3">
       <div
@@ -15,7 +15,7 @@ export default function JobsCard({ job, user }) {
             <h3 className="title text-2xl font-bold">{job.title}</h3>
             <p className="text-slate-400">{job.companyName}</p>
             <p className="text-slate-600">
-              {job.appliedCandidates.length} candidate applied
+              {job.appliedCandidates && job.appliedCandidates.length > 0} candidate applied
             </p>
           </div>
         </div>
@@ -29,11 +29,14 @@ export default function JobsCard({ job, user }) {
           <h3>{job.YOE}</h3>
         </div>
         <div className="text-lg font-semibold mt-5 flex flex-row justify-center items-center">
-          <Link to={`/${user}/jobsDetails?id=${job._id}`}>
+          {applied && <button className="bg-yellow-200 rounded-xl w-36 h-10">
+              PENDING
+            </button>}
+          {!applied && <Link to={`/${user}/jobsDetails?id=${job._id}`}>
             <button className="bg-sky-600  w-36 h-10">
               {user === "candidate" ? <>APPLY NOW</> : <>VIEW</>}
             </button>
-          </Link>
+          </Link>}
         </div>
       </div>
     </div>

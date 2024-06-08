@@ -26,6 +26,7 @@ export default function JobDetails() {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const id = searchParams.get("id");
+  const [job, setJob] = useState(null)
 
   //Job application
   const [apply, setApply] = useState(false);
@@ -40,7 +41,7 @@ export default function JobDetails() {
           `http://localhost:8000/api/candidate/jobDetails/${id}`
         );
         const job = data.job;
-
+        setJob(job)
         setCompanyName(job.companyName);
         setRole(job.title);
         setSalary(job.salary);
@@ -209,7 +210,7 @@ export default function JobDetails() {
         <div className="flex flex-row justify-evenly border h-44 mt-4 bg-slate-50 items-center">
           {/* <img src={img} alt="companies logo" className="w-14 ml-20 mr-9" /> */}
           <img src={img} alt="companies logo" className="w-14 ml-20 mr-9" />
-          <div className="title flex flex-col h-52 gap-2 justify-around ">
+          <div className="title flex flex-col h-52 items-center justify-center">
             {!edit && (
               <h3 className="title text-4xl font-bold">{companyName}</h3>
             )}
@@ -223,7 +224,7 @@ export default function JobDetails() {
               />
             )}
 
-            {!edit && <p className="text-slate-400">{role}</p>}
+            {!edit && <p className="text-slate-600">{role}</p>}
             {edit && (
               <input
                 className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
@@ -285,7 +286,7 @@ export default function JobDetails() {
                 className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
                 type="text"
                 placeholder="Location"
-                value={salary}
+                value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
             )}
@@ -314,7 +315,7 @@ export default function JobDetails() {
               <h3 className="font-semibold text-2xl my-20">
                 Applied Candidate
               </h3>
-              <AppliedCandidates candidates={candidate} />
+              <AppliedCandidates candidates={candidate} job={job} />
             </div>
           </>
         )}

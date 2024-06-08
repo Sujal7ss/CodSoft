@@ -30,7 +30,6 @@ function CandidateAboutMe() {
             withCredentials: true,
           }
         );
-        console.log(data)
         if (!data.success) {
           toast.error("Login first");
           setTimeout(() => {
@@ -238,13 +237,13 @@ function CandidateAboutMe() {
               </h3>
               {edit && (
                 <>
-                  <input
+                  <textarea
                     id="description"
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Enter your Role"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
+                    className="w-full h-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
                   />
                 </>
               )}
@@ -254,16 +253,7 @@ function CandidateAboutMe() {
                 </p>
               )}
             </div>
-            <div className="px-6 py-4 border-t border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Skills
-              </h3>
-              <ul className="list-disc list-inside text-gray-700">
-                {skills.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
+            
           </div>
         </div>
       </section>

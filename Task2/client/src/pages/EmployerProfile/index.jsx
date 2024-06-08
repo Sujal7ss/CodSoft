@@ -1,32 +1,40 @@
 import { useState } from "react";
 import axios from "axios";
 import img from "../../assets/intel.png";
-import getCookie from "../../components/cookie.js"
+import getCookie from "../../components/cookie.js";
 
 export default function EmployerProfile() {
-  const [title, setTitle] = useState("Title");
+  const [companyName, setCompanyName] = useState("Company Name");
+  const [city, setCity] = useState("City");
   const [about, setAbout] = useState("About");
+  const [description, setDescription] = useState("Description");
 
-  
-    
+  const [edit, setEdit] = useState(false);
   const call = async () => {
     let user = getCookie("username");
-      console.log(user);
-    
-    try {
 
+    try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/employer/companyDetails?email=${user}`,
-        
+        `http://localhost:8000/api/employer/companyDetails?email=${user}`
       );
 
       if (data.data) {
-        console.log(data);
-        setTitle(data.data.companyName);
+        setCompanyName(data.data.companyName);
+        setCity(data.data.city);
         setAbout(data.data.about);
+        setDescription(data.data.about)
       }
     } catch (err) {
       console.log(err.message);
+    }
+  };
+  const handleSave = () => {
+    console.log("Edit");
+    setEdit((e) => !e);
+    console.log(edit);
+
+    if (edit) {
+      console.log("send update data");
     }
   };
   return (
@@ -37,55 +45,79 @@ export default function EmployerProfile() {
       >
         <div className="flex flex-col w-3/4 mt-4 items-center h-96 gap-10">
           <div className="flex flex-row justify-between w-full border p-10 h-44 mt-4 bg-slate-50 items-center">
-            <div className="job-data flex flex-row w-fit  items-center">
+            <div className="job-data flex flex-row  justify-between w-full ">
               <img
                 src={img}
                 alt="companies logo"
                 className="w-14 h-14 ml-20 mr-9"
               />
               <div className="title flex flex-col ">
-                <h3 className="title text-4xl font-bold">{title}</h3>
-                <p className="text-slate-400">Company headline</p>
-                <p className="text-slate-400">Company type</p>
+                {edit && (
+                  <>
+                    <input
+                      id="companyName"
+                      type="text"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      placeholder="Enter your Company Name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
+                    />
+                  </>
+                )}
+                {!edit && (
+                  <h3 className="title text-4xl font-bold">{companyName}</h3>
+                )}
+
+                {edit && (
+                  <>
+                    <input
+                      id="city"
+                      type="text"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="Enter your Company Name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
+                    />
+                  </>
+                )}
+                {!edit && (
+                  <h4 className="title text-xl font-semibold">{city}</h4>
+                )}
               </div>
-              
-<button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown divider <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-</svg>
-</button>
-
-{/* <!-- Dropdown menu --> */}
-<div id="dropdownDivider" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-      </li>
-    </ul>
-    <div class="py-2">
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Separated link</a>
-    </div>
-</div>
-
+              <button
+                onClick={handleSave}
+                className="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300"
+              >
+                {edit ? "Save" : "Edit"}
+              </button>
             </div>
           </div>
 
           <div className="flex flex-col  border w-full  p-10 mt-4 bg-slate-50  justify-evenly items-start ">
-            <div className="title flex flex-col items-start ">
-              <h3 className="title text-xl ">About the Company</h3>
-              <p className="text-slate-400">{about}</p>
-            </div>
+            {!edit && (
+              <div className="title flex flex-col items-start ">
+                <h3 className="title text-xl ">About the Company</h3>
+                <p className="text-slate-400">{about}</p>
+              </div>
+            )}
+            {edit && (
+              <textarea
+                id="desc"
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Enter your Company Details"
+                className="w-full h-20 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
+              />
+            )}
           </div>
         </div>
         <div className="flex flex-col  border w-1/3 h-fit p-10 mt-4 bg-slate-50  justify-evenly">
           <div className="title flex flex-col items-start m-auto">
             <h3 className="title text-2xl font-bold">About the Company</h3>
-            <p className="text-slate-400">website</p>
+            <a href="#">
+              <p className="text-slate-400">website</p>
+            </a>
           </div>
           <div className="title flex-col items-center gap-5 mt-12">
             <div className="mb-3">
@@ -106,4 +138,3 @@ export default function EmployerProfile() {
     </>
   );
 }
-

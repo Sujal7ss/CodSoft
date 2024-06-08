@@ -23,7 +23,6 @@ export default function AppliedJobs({ user = "candidate" }) {
 
         if (data.success) {
           const list = data.jobs;
-          // console.log(list[0]);
           list.reverse();
           return setJobList(list);
         } else {

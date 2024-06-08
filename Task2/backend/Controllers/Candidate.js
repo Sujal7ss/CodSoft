@@ -4,7 +4,14 @@ import { sendWelcomeEmail } from "./mail.js";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
+import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
 
+// Get the current directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDirectory = path.join(__dirname, "../uploads");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -13,7 +20,7 @@ const login = async (req, res) => {
     const user = await Candidates.findOne({ email: email });
 
     if (!user) {
-      return res.status(401).json({
+      return res.status(200).json({
         success: false,
         message: "Invalid Credentials",
       });
@@ -29,10 +36,16 @@ const login = async (req, res) => {
       );
 
       // Set the token as a cookie
-      return res.cookie("token", token, { httpOnly: false , maxAge: 24 * 60 * 60 * 1000} ).status(200).json({
-        success: true,
-        message: "User verified",
-      });
+      return res
+        .cookie("token", token, {
+          httpOnly: false,
+          maxAge: 24 * 60 * 60 * 1000,
+        })
+        .status(200)
+        .json({
+          success: true,
+          message: "User verified",
+        });
     } else {
       return res.status(401).json({
         success: false,
@@ -93,7 +106,7 @@ const signup = async (req, res) => {
 };
 
 const aboutme = async (req, res) => {
-  console.log(req.userId);
+  // console.log(req.userId);
 
   if (req.candidate) {
     res
@@ -105,13 +118,11 @@ const aboutme = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  console.log(req.body);
   const candidate = await Candidates.findOneAndUpdate(
     { email: req.body.email },
     req.body,
     { new: true }
   );
-  console.log(candidate);
 
   res.json("update");
 };
@@ -130,12 +141,17 @@ const jobList = async (req, res) => {
 };
 const appliedJobs = async (req, res) => {
   try {
-    
     const list = req.candidate.appliedJobs;
+
+    let jobList = []
+    for(let i = 0; i < list.length; i++) {
+      const job = await Jobs.findOne({_id : list[i]})
+      jobList.push(job);
+    }
     // console.log(list)
     res.status(200).json({
       success: true,
-      jobs: list,
+      jobs: jobList,
     });
   } catch (err) {
     console.log(err);
@@ -152,7 +168,6 @@ const jobDetail = async (req, res) => {
     job: job,
   });
 };
-
 const appliedCandidates = async (req, res) => {
   try {
     const { emails } = req.body;
@@ -212,6 +227,33 @@ const sendMail = async (req, res) => {
   mail().catch(console.error);
 };
 
+const getResume = (req, res) => {
+  const userId = req.body.userId || req.params.id;
+  const filePath = path.join(uploadDirectory, `${userId}.pdf`);
+  console.log(filePath);
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error('File does not exist:', filePath);
+      return res.status(404).json({
+        success: false,
+        message: 'Resume not found',
+      });
+    }
+
+    console.log("file Exists")
+    // If file exists, send the file
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error('File send error:', err);
+        res.status(500).json({
+          success: false,
+          message: 'Error sending the file',
+        });
+      }
+    })
+  });
+};
+
 export {
   login,
   signup,
@@ -222,4 +264,5 @@ export {
   appliedJobs,
   appliedCandidates,
   sendMail,
+  getResume,
 };

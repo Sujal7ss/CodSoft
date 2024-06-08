@@ -53,4 +53,26 @@ const sendAppliedMail = async (email, title, companyName) => {
   });
 };
 
-export { sendWelcomeEmail, sendAppliedMail };
+const sendSelectedMail = async (title, companyName, email) => {
+  const emailContent = `
+    <p>Dear Applicant,</p>
+    <p>Congratulations! We are pleased to inform you that you have been selected for the ${title} role at ${companyName}. Welcome to the team!</p>
+    <p>Your application has been successful, and we look forward to having you on board.</p>
+    <p>Best regards,</p>
+    <p>The ${companyName} Team</p>
+  `;
+  const mailOptions = {
+    to: email,
+    from: process.env.MAIL,
+    subject: "Application Confirmation",
+    html: emailContent,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+    if (err) {
+      console.error("Error sending email:", err);
+    }
+  });
+};
+
+export { sendWelcomeEmail, sendAppliedMail , sendSelectedMail};

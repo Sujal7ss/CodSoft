@@ -14,7 +14,7 @@ const NavbarDetails = {
       { id: 1, name: "ACTIVE JOBS", path: "/candidate" },
       { id: 2, name: "APPLIED JOBS", path: "/candidate/appliedJobs" },
 
-      { id: 4, name: "AboutMe", path: "aboutme" },
+      { id: 4, name: "ABOUT ME", path: "aboutme" },
     ],
     Button: "Profile",
     Logo: "/candidate",
@@ -24,7 +24,7 @@ const NavbarDetails = {
       { id: 1, name: "POSTED JOBS", path: "postedJobs" },
       { id: 2, name: "SAVED CANDIDATES", path: "/employer" },
 
-      { id: 4, name: "AboutMe", path: "/employer" },
+      { id: 4, name: "ABOUT ME", path: "/employer" },
     ],
     Button: {
       name: "Profile",

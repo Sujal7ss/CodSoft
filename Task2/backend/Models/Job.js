@@ -13,7 +13,10 @@ const JobSchema = mongoose.Schema({
     country:String,
     appliedCandidates : [
         {type:String}
-    ]
+    ],
+    selectedCandidate:[
+        {type:String}
+    ],
 })
 
 export const Jobs = mongoose.model("Jobs", JobSchema)
