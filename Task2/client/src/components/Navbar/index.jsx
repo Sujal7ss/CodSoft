@@ -17,7 +17,7 @@ export default function Navbar({ pages }) {
     return navigate("postJob")
   }
   return (
-    <header className="navbar h-20 bg-C0DFED w-full  top-0 ">
+    <header className="navbar h-fit bg-C0DFED w-full  top-0 ">
       <nav className="container flex flex-row  justify-center bg sm:justify-between items-center p-7 w-full">
         <Link to={logo}>
           <Logo />

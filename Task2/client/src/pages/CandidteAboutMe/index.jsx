@@ -111,9 +111,9 @@ function CandidateAboutMe() {
 
   return (
     <>
-      <section className="bg-gray-100 py-12">
-        <div className="max-w-4xl mx-auto px-4 flex sm:px-6 lg:px-8">
-          <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col gap-10">
+      <section className=" py-12 flex items-center">
+        <div className="max-w-full mx-auto px-4 flex sm:px-6 lg:px-8">
+        <div className="card w-72 shadow-lg relative flex flex-col border top-2 hover:top-0 hover:cursor-pointer  border-zinc-300 border-r-4 border-b-4 md:w-full md:h-full p-3 rounded-lg  mb-5">
             <div className="flex items-center p-6 gap-10">
               <img
                 className="h-24 w-24 rounded-full object-cover border-2 border-gray-300"
