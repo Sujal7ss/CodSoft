@@ -50,6 +50,8 @@ export default function JobDetails() {
         setLink(job.jobLink);
         setCandidate(job.appliedCandidates);
 
+        // console.log(data.job.authorId)
+        // console.log(document.cookie.username)
         if (data.job.authorId === getCookie("username")) {
           setUser(true);
         }
@@ -130,6 +132,12 @@ export default function JobDetails() {
       toast.error("Failed to submit application");
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior:"smooth"});  
+    
+  }, [])
+  
   return (
     <>
       <ReactModal isOpen={apply}>
@@ -196,13 +204,13 @@ export default function JobDetails() {
         <div className="flex flex-row shadow-lg h-20 justify-evenly border md:h-44 mt-4  bg-slate-50 items-center border-zinc-300 border-r-2 border-b-2 rounded-lg">
           {/* <img src={img} alt="companies logo" className="w-14 ml-20 mr-9" /> */}
           <img src={img} alt="companies logo" className="mx-5 w-10 md:w-14 md:ml-20 md:mr-9" />
-          <div className="title flex flex-col md:h-42 items-center justify-between">
+          <div className="title flex flex-col  items-center justify-between">
             {!edit && (
               <h3 className="title md:text-2xl font-semibold underline">{companyName}</h3>
             )}
             {edit && (
               <input
-                className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
+                className="w-20 h-8 md:w-full  md:px-2 text-xs py-1.5 m-1 rounded-md ring-1 md:m-3 md:drop-shadow-2xl  text-slate-700 block "
                 type="text"
                 placeholder="Company Name"
                 value={companyName}
@@ -213,7 +221,7 @@ export default function JobDetails() {
             {!edit && <p className="text-slate-600 md:text-4xl">{role}</p>}
             {edit && (
               <input
-                className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
+                className="w-20 h-8 md:w-full  px-2 py-1.5 text-xs rounded-md ring-1  drop-shadow-2xl md:m-3 text-slate-700 block "
                 type="text"
                 placeholder="Role"
                 value={role}
@@ -224,27 +232,19 @@ export default function JobDetails() {
 
           {!edit && !user && (
             <Button
-              className={"md:mr-20"}
-              style={"bg-C0DFED"}
+              className={"md:mr-20 w-16 md:w-28"}
+              style={"bg-C0DFED "}
               onSelect={applyHandler}
             >
               <p className="text-sm font-semibold">Apply</p>
             </Button>
           )}
-          {/* {edit && (
-            <input
-              className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
-              type="text"
-              placeholder="Link"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-            />
-          )} */}
+          
 
           {user && (
             <button
               onClick={handleSave}
-              className="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300"
+              className="px-2 py-1 md:mt-4 md:px-4 md:py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300"
             >
               {edit ? "Save" : "Edit"}
             </button>
@@ -252,11 +252,11 @@ export default function JobDetails() {
         </div>
         <div className="flex flex-row shadow-lg h-20 justify-evenly border md:h-44 mt-4  bg-slate-50 items-center border-zinc-300 border-r-2 border-b-2 rounded-lg">
           <div>
-            <h2 className="text-gray-400 text-md m-auto">Salary</h2>
+            <h2 className="text-gray-400 text-sm md:text-md md:ml-12">Salary</h2>
             {!edit && <button className="text-md`  hover:bg-gray-500 border border-none bg-gray-300 w-28 rounded-md">Rs {salary}</button>}
             {edit && (
               <input
-                className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
+                className="w-20 h-8 text-sm  md:px-2 md:py-1.5 md:w-28 rounded-md ring-1  drop-shadow-2xl md:m-10 text-slate-700 block "
                 type="number"
                 placeholder="Salary"
                 value={salary}
@@ -265,11 +265,11 @@ export default function JobDetails() {
             )}
           </div>
           <div>
-            <h2 className="text-gray-400 text-md m-auto">Location</h2>
+            <h2 className="text-gray-400 text-sm  md:text-md md:ml-12 ">Location</h2>
             {!edit && <button className="text-md`  hover:bg-gray-500 border border-none bg-gray-300 w-28 rounded-md">{location}</button>}
             {edit && (
               <input
-                className=" px-2 py-1.5 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
+                className="w-20 h-8 text-sm  md:px-2 md:py-1.5 md:w-28 rounded-md ring-1  drop-shadow-2xl md:m-10 text-slate-700 block "
                 type="text"
                 placeholder="Location"
                 value={location}
@@ -286,7 +286,7 @@ export default function JobDetails() {
             {!edit && <p>{description}</p>}
             {edit && (
               <textarea
-                className=" px-2 py-1.5 w-full h-96 rounded-md ring-1  drop-shadow-2xl m-10 text-slate-700 block "
+                className=" px-2 py-1.5 w-full md:h-96 rounded-md ring-1  drop-shadow-2xl  text-slate-700 block "
                 type="text"
                 placeholder="Description"
                 value={description}
@@ -298,7 +298,7 @@ export default function JobDetails() {
         {user && (
           <>
             <div className="flex flex-col justify-evenly border h-fit mt-4 bg-slate-50 items-center">
-              <h3 className="font-semibold text-2xl my-20">
+              <h3 className="font-semibold text-2xl md:my-20">
                 Applied Candidate
               </h3>
               <AppliedCandidates candidates={candidate} job={job} />

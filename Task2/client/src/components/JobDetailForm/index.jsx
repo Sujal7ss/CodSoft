@@ -10,7 +10,7 @@ function JobDetailForm() {
   const [details, setDetails] = useState(false);
 
   const [title, setTitle] = useState("");
-  const [jobType, setJobType] = useState(0);
+  const [jobType, setJobType] = useState("Part-Time");
   const [experience, setExperience] = useState("");
   const [salary, setSalary] = useState();
   const [jobDescription, setJobDescription] = useState();
@@ -41,7 +41,16 @@ function JobDetailForm() {
 
   const setJobDetails = async (e) => {
     e.preventDefault();
-    if (!title || !jobType || !experience || !salary || !jobDescription || !city || !state || !country) {
+    if (
+      !title ||
+      !jobType ||
+      !experience ||
+      !salary ||
+      !jobDescription ||
+      !city ||
+      !state ||
+      !country
+    ) {
       return toast.error("All fields are required");
     }
     if (experience < 0) {
@@ -62,7 +71,6 @@ function JobDetailForm() {
           country: country,
         }
       );
-      
 
       if (data.success) {
         toast.success(data.message);
@@ -76,124 +84,184 @@ function JobDetailForm() {
   };
 
   return (
-    <form className="mt-6">
-      <div className="relative mb-5">
-        <div className="absolute left-0 inset-y-0 flex items-center"></div>
-      </div>
-      <div className="relative">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="title"
-          type="text"
-          placeholder="Job Title"
-          name="jobTitle"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
+    <>
+      
+      <form class="max-w-md mx-auto mt-6" method="post">
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="title"
+            id="title"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <label
+            for="title"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Title
+          </label>
+        </div>
 
-      <div className="relative mt-3">
-        <select
-          id="jobtype"
-          name="jobtype"
-          required
-          value={jobType}
+        <div class="relative z-0 w-full mb-5 group">
+          <select
+            type="text"
+            name="jobtype"
+            id="jobtype"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setJobType(e.target.value);
+            }}
+          >
+            <option value="Part-Time">Part-Time</option>
+            <option value="Full-Time">Full-Time</option>
+            <option value="Internship">Internship</option>
+          </select>
+          <label
+            for="jobtype"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Job Type
+          </label>
+        </div>
 
-          onChange={(e) => {
-            setJobType(e.target.value);
-          }}
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-        >
-          <option value="Part-Time">Part-Time</option>
-          <option value="Full-Time">Full-Time</option>
-          <option value="Internship">Internship</option>
-        </select>
-      </div>
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="experience"
-          type="number"
-          placeholder="Experience"
-          name="experience"
-          onChange={(e) => {
-            setExperience(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <CurrencyInput
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="salary"
-          name="salary"
-          prefix="Rs"
-          placeholder="Salary"
-          allowDecimals={false}
-          allowNegativeValue={false}
-          onValueChange={(value, name, values) => setSalary(value)}
-        />
-      </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="number"
+            name="experience"
+            id="experience"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setExperience(e.target.value);
+            }}
+          />
+          <label
+            for="experience"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Experience
+          </label>
+        </div>
 
-      <div className="relative mt-3">
-        <textarea
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="details"
-          type="text"
-          placeholder="Job Details"
-          name="details"
-          onChange={(e) => {
-            setJobDescription(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="city"
-          type="text"
-          placeholder="City"
-          name="city"
-          onChange={(e) => {
-            setCity(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="state"
-          type="text"
-          placeholder="State"
-          name="state"
-          onChange={(e) => {
-            setState(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="country"
-          type="text"
-          placeholder="Country"
-          name="country"
-          onChange={(e) => {
-            setCountry(e.target.value);
-          }}
-        />
-      </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <CurrencyInput
+            name="salary"
+            id="salary"
+            prefix="Rs "
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            allowDecimals={false}
+            allowNegativeValue={false}
+            onValueChange={(value, name, values) => setSalary(value)}
+          />
+          <label
+            for="experience"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Salary
+          </label>
+        </div>
 
-      <div className="flex items-center justify-center mt-8">
-        <button
-          className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
-          type="submit"
-          onClick={(e) => {
-            setJobDetails(e);
-          }}
-        >
-          NEXT
-        </button>
-      </div>
-    </form>
+        <div class="relative z-0 w-full mb-5 group">
+          <textarea
+            type="text"
+            name="desc"
+            id="desc"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setJobDescription(e.target.value);
+            }}
+          />
+          <label
+            for="desc"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Job Description
+          </label>
+        </div>
+
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="city"
+            id="city"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setCity(e.target.value);
+            }}
+          />
+          <label
+            for="city"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            City
+          </label>
+        </div>
+
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="state"
+            id="state"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setState(e.target.value);
+            }}
+          />
+          <label
+            for="state"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            State
+          </label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="country"
+            id="country"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setCountry(e.target.value);
+            }}
+          />
+          <label
+            for="country"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Country
+          </label>
+        </div>
+        
+
+        <div className="flex items-center justify-center mt-8">
+          <button
+            className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+            type="submit"
+            onClick={(e) => {
+              setJobDetails(e);
+            }}
+          >
+            NEXT
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

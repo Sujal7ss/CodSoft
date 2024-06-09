@@ -22,35 +22,36 @@ export default function EmployerProfile() {
         setCompanyName(data.data.companyName);
         setCity(data.data.city);
         setAbout(data.data.about);
-        setDescription(data.data.about)
+        setDescription(data.data.about);
       }
     } catch (err) {
       console.log(err.message);
     }
   };
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log("Edit");
     setEdit((e) => !e);
     console.log(edit);
 
     if (edit) {
-      console.log("send update data");
+      try {
+        const { data } = await axios.post(
+          `http://localhost:8000/api/employer/companyDetails`
+        );
+      } catch (err) {}
     }
   };
   return (
     <>
       <div
         onLoad={call}
-        className="company w-11/12 h-96 m-auto mb-10 flex-row flex gap-10 "
+        className="company w-11/12 h-96 m-auto mb-10 flex-col items-center md:items-start md:flex-row flex gap-10 "
       >
         <div className="flex flex-col w-3/4 mt-4 items-center h-96 gap-10">
-          <div className="flex flex-row justify-between w-full border p-10 h-44 mt-4 bg-slate-50 items-center">
-            <div className="job-data flex flex-row  justify-between w-full ">
-              <img
-                src={img}
-                alt="companies logo"
-                className="w-14 h-14 ml-20 mr-9"
-              />
+          <div className="card w-72 shadow-lg relative flex items-center border top-2 hover:top-0 hover:cursor-pointer  border-zinc-300 border-r-4 border-b-4 md:w-full md:h-full p-3 rounded-lg  mb-5">
+            {/*   <div className="flex flex-row justify-between w-full border p-10 h-44 mt-4 bg-slate-50 items-center"> */}
+            <div className="job-data flex flex-row  justify-evenly w-full ">
+              
               <div className="title flex flex-col ">
                 {edit && (
                   <>
@@ -60,12 +61,14 @@ export default function EmployerProfile() {
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
                       placeholder="Enter your Company Name"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
+                      className="w-24 h-8 md:w-full md:h-10 mb-2 md:px-3 md:py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
                     />
                   </>
                 )}
                 {!edit && (
-                  <h3 className="title text-4xl font-bold">{companyName}</h3>
+                  <h3 className="title text-2xl md:text-4xl  md:mb-5 font-semibold ">
+                    {companyName}
+                  </h3>
                 )}
 
                 {edit && (
@@ -76,27 +79,29 @@ export default function EmployerProfile() {
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="Enter your Company Name"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
+                      className="w-24 h-8 md:w-full md:h-10 mb-2 md:px-3 md:py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300"
                     />
                   </>
                 )}
                 {!edit && (
-                  <h4 className="title text-xl font-semibold">{city}</h4>
+                  <h4 className="title text-sm  md:text-xl font-semibold">
+                    {city}
+                  </h4>
                 )}
               </div>
               <button
                 onClick={handleSave}
-                className="mt-4 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300"
+                className="px-2 h-10 mt-2 md:mt-4 md:px-4 md:py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300"
               >
                 {edit ? "Save" : "Edit"}
               </button>
             </div>
           </div>
 
-          <div className="flex flex-col  border w-full  p-10 mt-4 bg-slate-50  justify-evenly items-start ">
+          <div className="card w-72 shadow-lg relative flex items-center border top-2 hover:top-0 hover:cursor-pointer  border-zinc-300 border-r-4 border-b-4 md:w-full md:h-full p-3 rounded-lg  mb-5">
             {!edit && (
               <div className="title flex flex-col items-start ">
-                <h3 className="title text-xl ">About the Company</h3>
+                <h3 className="title text-md md:text-xl ">About the Company</h3>
                 <p className="text-slate-400">{about}</p>
               </div>
             )}
@@ -112,7 +117,7 @@ export default function EmployerProfile() {
             )}
           </div>
         </div>
-        <div className="flex flex-col  border w-1/3 h-fit p-10 mt-4 bg-slate-50  justify-evenly">
+        <div className="hidden md:flex flex-col  border w-1/3 h-fit p-10 mt-4 bg-slate-50 justify-evenly">
           <div className="title flex flex-col items-start m-auto">
             <h3 className="title text-2xl font-bold">About the Company</h3>
             <a href="#">

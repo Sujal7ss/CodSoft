@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import ReactModal from "react-modal";
-import { ScrollRestoration } from "react-router-dom";
+import classNames from 'classnames';
 
 function Candidate({ candidate, job }) {
   const [resumeUrl, setResumeUrl] = useState(null);
@@ -54,27 +54,35 @@ function Candidate({ candidate, job }) {
     toast.error("Candidate not selected")
     setIsOpen((e) => !e);
   };
+  const getModalClasses = () => {
+    return classNames(
+      'w-96', 'h-96', 'max-w-md', 'max-h-md', // Default to medium size
+      'sm:max-w-lg', 'sm:max-h-lg', // Medium devices
+      'md:max-w-xl', 'md:max-h-xl', // Large devices
+      'lg:max-w-2xl', 'lg:max-h-2xl', // Larger devices
+      'm-auto', 'p-4', 'bg-white', 'rounded-lg', 'shadow-lg', 'h-20'
+    );
+  };
 
+  const overlayStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay background
+  };
   return (
     <section className="bg-gray-100 py-12">
       <ReactModal
         isOpen={isOpen}
         // className={"flex align-middle justify-center items-center w-52 h-52 bg-sky-300"}
         style={{
-          overlay: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          content: {
-            width: "500px",
-            height: "500px",
-            margin: "auto",
-            backgroundColor: "#", // Set your desired background color here
-          },
+          overlay: overlayStyle,
+          content: {}, // We will handle the content style with Tailwind classes
         }}
+        className={getModalClasses()}
+
       >
-        <div className="modal flex flex-col align-center  items-center  w-full h-full">
+        <div className="modal flex flex-col align-center items-center  md:w-full md:h-full">
           <h3 className="modal-title text-2xl mt-28 mb-20 font-sans font-semibold">
             Do u want to select this candidate?
           </h3>
@@ -94,14 +102,10 @@ function Candidate({ candidate, job }) {
           </div>
         </div>
       </ReactModal>
-      <div className="max-w-4xl mx-auto px-4 flex sm:px-6 lg:px-8">
+      <div className="md:max-w-4xl mx-auto px-4 flex sm:px-6 lg:px-8">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col gap-10">
-          <div className="flex items-center p-6 gap-10">
-            <img
-              className="h-24 w-24 rounded-full object-cover border-2 border-gray-300"
-              src="https://via.placeholder.com/150"
-              alt="Profile"
-            />
+          <div className="flex flex-col md:flex-row items-center p-6 gap-10">
+            
             <div className="ml-6">
               {candidate.name && (
                 <h2 className="text-2xl font-bold text-gray-900">

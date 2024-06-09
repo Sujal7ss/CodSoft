@@ -43,4 +43,8 @@ const companyData = async (req, res) => {
         data : company
     })
 }
-export {companyDetails, companyData}
+
+const companyDataUpdate = async (req, res) => {
+    console.log(req.body)
+}
+export {companyDetails, companyData, companyDataUpdate}

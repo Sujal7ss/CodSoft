@@ -59,104 +59,88 @@ function EmployerSignup() {
             </h1>
 
             <form
-              className="mt-6"
+              class="max-w-md mx-auto"
               method="post"
-              onSubmit={(e) => {
-                signup(e);
-              }}
+              onSubmit={(e) => signup(e, name, email, passwd)}
             >
-              <div className="relative mb-3">
+              <div class="relative z-0 w-full mb-5 group">
                 <input
-                  className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-                  id="username"
                   type="text"
-                  placeholder="Name"
-                  name="name"
+                  name="floating_name"
+                  id="floating_name"
+                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
                   required
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
                 />
-                <div className="absolute left-0 inset-y-0 flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7 ml-3 text-gray-400 p-1"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                  </svg>
-                </div>
+                <label
+                  for="floating_name"
+                  class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Name
+                </label>
               </div>
-              <div className="relative">
+              <div class="relative z-0 w-full mb-5 group">
                 <input
-                  className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-                  id="email"
-                  type="text"
-                  placeholder="Email"
-                  name="email"
+                  type="email"
+                  name="floating_email"
+                  id="floating_email"
+                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
                   required
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
-                <div className="absolute left-0 inset-y-0 flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7 ml-3 text-gray-400 p-1"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                  </svg>
-                </div>
+                <label
+                  for="floating_email"
+                  class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Email address
+                </label>
               </div>
-              <div className="relative mt-3">
+              <div class="relative z-0 w-full mb-5 group">
                 <input
-                  className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-                  id="password"
-                  type="text"
-                  placeholder="Password"
-                  name="password"
+                  type="password"
+                  name="floating_password"
+                  id="floating_password"
+                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
                   onChange={(e) => {
                     setPasswd(e.target.value);
                   }}
-                  required
                 />
-                <div className="absolute left-0 inset-y-0 flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7 ml-3 text-gray-400 p-1"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
-                  </svg>
-                </div>
+                <label
+                  for="floating_password"
+                  class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Password
+                </label>
               </div>
-
-              <div className="mt-4 flex items-center text-gray-500">
+              
+              <div class="mt-4 flex items-center text-gray-500">
                 <input
                   type="checkbox"
                   id="remember"
                   name="remember"
-                  className="mr-3"
+                  class="mr-3"
                 />
-                <label htmlFor="remember">Remember me</label>
+                <label for="remember">Remember me</label>
               </div>
-              <div className="flex items-center justify-center mt-8">
+              <div class="flex items-center justify-center mt-8">
                 <button
-                  className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  class="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
                   type="submit"
                 >
                   Sign Up
                 </button>
               </div>
-              <hr className="m-4" />
-              <div className="flex items-center justify-center mt-5">
-                <p className=" text-gray-500 ">HAVE A ACCOUNT ?!</p>
+              <hr class="m-4" />
+              <div class="flex items-center justify-center mt-5">
+                <p class="text-gray-500">HAVE AN ACCOUNT ?!</p>
                 <Link
                   to="/employerLogin"
                   className="text-white py-2 px-4 ml-3 uppercase rounded bg-green-400 hover:bg-green-500 shadow hover:shadow-lg font-medium transition transform  "

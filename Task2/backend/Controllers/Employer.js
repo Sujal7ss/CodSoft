@@ -62,5 +62,10 @@ export const login = async (req, res) => {
         })
       }
     }
-  } catch (err) {}
+  } catch (err) {
+    return res.status(200).json({
+      success : false,
+      message: "Password Incorrect"
+  })
+  }
 };

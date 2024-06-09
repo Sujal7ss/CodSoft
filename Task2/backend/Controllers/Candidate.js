@@ -47,7 +47,7 @@ const login = async (req, res) => {
           message: "User verified",
         });
     } else {
-      return res.status(401).json({
+      return res.status(200).json({
         success: false,
         message: "Invalid Credentials.",
       });

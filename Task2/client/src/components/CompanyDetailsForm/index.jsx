@@ -15,9 +15,9 @@ function CompanyDetailsForm() {
   const [about, setAbout] = useState("");
 
   // useEffect(() => {
-    // if (details) {
-    //   navigate("/employer");
-    // }
+  // if (details) {
+  //   navigate("/employer");
+  // }
   // }, [details, navigate]);
 
   function getCookie(cname) {
@@ -35,21 +35,13 @@ function CompanyDetailsForm() {
     return "";
   }
 
-  
   const setCompanyDetails = async (e) => {
     e.preventDefault();
-    if (
-      !companyName ||
-      !phone ||
-      !city ||
-      !state ||
-      !country ||
-      !about
-    ) {
+    if (!companyName || !phone || !city || !state || !country || !about) {
       return toast.error("All fields are required");
     }
     try {
-      const email = getCookie("username")
+      const email = getCookie("username");
       const { data } = await axios.post(
         `http://localhost:8000/api/employer/companyDetails?email=${email}`,
 
@@ -76,96 +68,141 @@ function CompanyDetailsForm() {
   };
 
   return (
-    <form
-      className="mt-6"
-      onSubmit={(e) => {
-        setCompanyDetails(e);
-      }}
-    >
-      <div className="relative mb-5">
-        <div className="absolute left-0 inset-y-0 flex items-center"></div>
-      </div>
-      <div className="relative">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="companyName"
-          type="text"
-          placeholder="Your Company Name"
-          name="companyName"
-          onChange={(e) => setCompanyName(e.target.value)}
-        />
-      </div>
-      
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="phone"
-          type="text"
-          placeholder="Phone"
-          name="name"
-          onChange={(e) => {
-            setPhone(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="city"
-          type="text"
-          placeholder="City"
-          name="city"
-          onChange={(e) => {
-            setCity(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="state"
-          type="text"
-          placeholder="State"
-          name="state"
-          onChange={(e) => {
-            setState(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <input
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="country"
-          type="text"
-          placeholder="Country"
-          name="country"
-          onChange={(e) => {
-            setCountry(e.target.value);
-          }}
-        />
-      </div>
-      <div className="relative mt-3">
-        <textarea
-          className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-          id="about"
-          type="text"
-          placeholder="About Company"
-          name="about"
-          onChange={(e) => {
-            setAbout(e.target.value);
-          }}
-        />
-      </div>
+    <>
+      <form
+        class="max-w-md mx-auto mt-6"
+        method="post"
+        onSubmit={(e) => {
+          setCompanyDetails(e);
+        }}
+      >
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="company"
+            id="company"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => setCompanyName(e.target.value)}
+          />
+          <label
+            for="floating_email"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Company Name
+          </label>
+        </div>
 
-      <div className="flex items-center justify-center mt-8">
-        <button
-          className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
-          type="submit"
-        >
-          NEXT
-        </button>
-      </div>
-      {/* <hr className="m-4" />
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="number"
+            name="phone"
+            id="phone"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setPhone(e.target.value);
+            }}
+          />
+          <label
+            for="phone"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Phone no
+          </label>
+        </div>
+
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="city"
+            id="city"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setCity(e.target.value);
+            }}
+          />
+          <label
+            for="phone"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            City
+          </label>
+        </div>
+
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="state"
+            id="state"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setState(e.target.value);
+            }}
+          />
+          <label
+            for="phone"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            State
+          </label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="country"
+            id="country"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setCountry(e.target.value);
+            }}
+          />
+          <label
+            for="phone"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Country
+          </label>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <textarea
+            type="text"
+            name="about"
+            id="about"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=""
+            required
+            onChange={(e) => {
+              setAbout(e.target.value);
+            }}
+          />
+          <label
+            for="phone"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            About
+          </label>
+        </div>
+
+        
+
+        <div className="flex items-center justify-center mt-8">
+          <button
+            className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+            type="submit"
+          >
+            NEXT
+          </button>
+        </div>
+        {/* <hr className="m-4" />
       <div className="flex items-center justify-center mt-5">
         <span className=" text-gray-500">DO NOT HAVE A ACCOUNT ?!</span>{" "}
         <Link
@@ -175,7 +212,9 @@ function CompanyDetailsForm() {
           REGISTER
         </Link>
       </div> */}
-    </form>
+      </form>
+      
+    </>
   );
 }
 
