@@ -22,17 +22,19 @@ config();
 config({
   path: ".env",
 });
-const PORT = process.env.PORT || 8000
+const PORT = 8000;
+const DB=process.env.CONNECTION_STRING
 //mongoDB connection
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.CONNECTION_STRING);
+    const conn = await mongoose.connect(DB);
     console.log("Connected to MongoDB established");
+
   } catch (err) {
     console.log("Connection not established with mongoDB");
   }
 };
-connectDB()
+connectDB();
 
 //Middlewares
 app.use(cookieParser());
@@ -53,10 +55,13 @@ app.use(
 app.use("/api/candidate/", candidate);
 app.use("/api/employer/", employer);
 
-
-if(process.env.NODE_ENV == 'production'){
-  app.use(express.static("client/build"))
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static("client/build"));
 }
+
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to StaffMerge" });
+});
 app.listen(PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);
 });
