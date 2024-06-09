@@ -22,7 +22,8 @@ config();
 config({
   path: ".env",
 });
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
+console.log(PORT)
 const DB=process.env.CONNECTION_STRING
 //mongoDB connection
 const connectDB = async () => {
@@ -63,5 +64,5 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to StaffMerge" });
 });
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${process.env.PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });
