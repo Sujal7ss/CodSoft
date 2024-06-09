@@ -1,6 +1,6 @@
 backend/node_modules
 backend/.env
-
+client/.env
 
 .env.local
 .env.development.local
