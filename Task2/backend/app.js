@@ -22,7 +22,7 @@ config();
 config({
   path: ".env",
 });
-
+const PORT = process.env.PORT || 8000
 //mongoDB connection
 const connectDB = async () => {
   try {
@@ -53,6 +53,10 @@ app.use(
 app.use("/api/candidate/", candidate);
 app.use("/api/employer/", employer);
 
-app.listen(process.env.PORT, () => {
+
+if(process.env.NODE_ENV == 'production'){
+  app.use(express.static("client/build"))
+}
+app.listen(PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);
 });
