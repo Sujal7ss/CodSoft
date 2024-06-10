@@ -23,8 +23,9 @@ config({
   path: ".env",
 });
 const PORT = process.env.PORT || 8000;
-console.log(PORT)
+// console.log(PORT)
 const DB=process.env.CONNECTION_STRING
+// console.log(DB)
 //mongoDB connection
 const connectDB = async () => {
   try {
@@ -66,3 +67,5 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+export default app

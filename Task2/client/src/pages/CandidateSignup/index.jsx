@@ -33,7 +33,7 @@ function CandidateSignup() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/candidate/signup",
+        `${process.env.REACT_APP_BACKENDURI}/api/candidate/signup`,
         {
           name: name,
           email: email,

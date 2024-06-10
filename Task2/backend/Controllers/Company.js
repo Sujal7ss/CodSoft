@@ -2,7 +2,9 @@ import {Employers} from "../Models/Employer.js"
 
 const companyDetails = async(req,res) => {
     
+    console.log(req.body)
     const email = req.query.email
+    console.log(email)
     const {companyName, phone, city, state, country, about }= req.body
     try{
         const isCompanyExists = await Employers.find({companyName: companyName})

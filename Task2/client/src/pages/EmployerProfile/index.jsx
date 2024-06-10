@@ -11,14 +11,15 @@ export default function EmployerProfile() {
 
   const [edit, setEdit] = useState(false);
   const call = async () => {
-    let user = getCookie("username");
-
+    let user = getCookie(document.cookie);
+    console.log(user)
     try {
       const { data } = await axios.get(
         `http://localhost:8000/api/employer/companyDetails?email=${user}`
       );
 
       if (data.data) {
+        console.log(data)
         setCompanyName(data.data.companyName);
         setCity(data.data.city);
         setAbout(data.data.about);

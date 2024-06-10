@@ -40,9 +40,10 @@ export default function AppliedJobs({ user = "candidate" }) {
     getList();
   }, []);
 
+  console.log(jobList);
   return (
     <>
-      <JobListing JobList={jobList} applied={true} user={user} />
+      {jobList.length > 0 && <JobListing JobList={jobList} applied={true} user={user} />}
     </>
   );
 }

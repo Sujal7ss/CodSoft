@@ -130,7 +130,7 @@ const update = async (req, res) => {
 const jobList = async (req, res) => {
   try {
     const list = await Jobs.find({});
-    // console.log(list);
+    console.log(list);
     res.status(200).json({
       success: true,
       jobs: list,
